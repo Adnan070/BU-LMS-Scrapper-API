@@ -6,7 +6,7 @@ const cors = require('cors')
 const session = require('express-session')
 const schedule = require('node-schedule')
 
-const port = process.env.PORT || 5000
+const port = server.listen(process.env.PORT || 3000)
 const uri = process.env.MONGO_URI
 
 // Connecting to Database
@@ -44,5 +44,5 @@ app.use('/lms/users', require('./routes/user'))
 app.use('/lms/crawler', require('./routes/crawl'))
 
 // schedule.scheduleJob('*/2 * * * *', () => separation());
-app.set('port', process.env.NODE_PORT)
-// app.listen(port, () => console.log("App is running!"));
+// app.set('port', process.env.NODE_PORT)
+app.listen(port, () => console.log('App is running!'))
