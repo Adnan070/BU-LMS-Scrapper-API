@@ -3,7 +3,6 @@ const cheerio = require('cheerio')
 
 const goToLMS = async (page) => {
   await page.goto('https://cms.bahria.edu.pk/Sys/Common/GoToLMS.aspx')
-  await page.screenshot({ path: '6.png' })
   await page.goto('https://lms.bahria.edu.pk/Student/Assignments.php')
   const content = await page.content()
 
@@ -13,13 +12,10 @@ const goToLMS = async (page) => {
 const login = async (page, enroll, pass) => {
   await page.goto('https://cms.bahria.edu.pk/Logins/Student/Login.aspx')
 
-  // await page.screenshot({ path: "1.png" });
   await page.type("[name='ctl00$BodyPH$tbEnrollment']", `${enroll}`)
-  // await page.screenshot({ path: "2.png" });
   await page.type("[name='ctl00$BodyPH$tbPassword']", `${pass}`)
   await page.select('#BodyPH_ddlInstituteID', '2')
   await page.select('#BodyPH_ddlSubUserType', 'None')
-  await page.screenshot({ path: '3.png' })
   await page.click("[id='BodyPH_btnLogin']")
   await page.waitForNavigation()
   const content = await page.content()
