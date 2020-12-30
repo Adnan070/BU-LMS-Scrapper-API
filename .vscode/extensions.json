@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "fabiospampinato.vscode-highlight",
+        "ghmcadams.lintlens",
+        "jgclark.vscode-todo-highlight",
+        "eamodio.gitlens"
+    ]
+}
