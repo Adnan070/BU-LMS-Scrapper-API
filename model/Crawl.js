@@ -1,22 +1,22 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-
-const pageSchema = mongoose.Schema({
-    uid:{
-        type: String,
+const pageSchema = mongoose.Schema(
+    {
+        uid: {
+            type: String,
+        },
+        assignments: {
+            type: Object,
+            default: {},
+        },
+        date: {
+            type: Date,
+            default: new Date().toISOString(),
+        },
     },
-    assignments: {
-        type: Object,
-        default: {}
+    {
+        collection: "crawl",
     },
-    date: {
-        type: Date,
-        default: new Date().toISOString()
-    }
-},{
-    collection: 'crawl'
-})
+);
 
-module.exports = mongoose.model('Page', pageSchema);
-
-
+module.exports = mongoose.model("Page", pageSchema);
