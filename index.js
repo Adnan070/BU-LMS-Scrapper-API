@@ -6,7 +6,7 @@ const cors = require('cors')
 const session = require('express-session')
 const schedule = require('node-schedule')
 
-const port = server.listen(process.env.PORT || 3000)
+const port = process.env.PORT || 3000
 const uri = process.env.MONGO_URI
 
 // Connecting to Database
