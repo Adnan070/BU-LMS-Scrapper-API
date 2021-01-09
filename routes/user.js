@@ -13,8 +13,8 @@ const { main } = require('../crawler/scrap')
 router.get('/auth', auth, (req, res) => {
   res.status(200).json({
     _id: req.user._id,
-    name: req.user.name,
-    enroll: req.body.enroll,
+    // name: req.user.name,
+    enroll: req.user.enroll,
     isAuth: true,
   })
 })
@@ -40,7 +40,6 @@ router.post('/register', async (req, res) => {
             .status(200)
             .json({ success: false, msg: 'User Already Exist! ' })
         }
-
         user.save((err, doc) => {
           if (err) {
             console.log(err)
@@ -78,10 +77,13 @@ router.post('/login', (req, res) => {
           loginSuccess: false,
           message: 'Wrong password',
         })
-
+      console.log('Password Correct')
       user.generateToken((err, user) => {
         if (err) return res.status(400).send(err)
+        console.log('Token Genrated')
         req.session.w_auth = user.token
+        console.log(req.session.w_auth)
+        console.log('Session ID', req.session)
         res.status(200).json({
           loginSuccess: true,
           userId: user._id,
