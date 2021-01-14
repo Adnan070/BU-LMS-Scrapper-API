@@ -6,6 +6,15 @@ const { auth } = require('../util/auth')
 const router = require('express').Router()
 
 router.get('/assignment', auth, async (req, res) => {
+  if (req.app.locals.ERROR) {
+    let resData = {
+      success: false,
+      err: req.app.locals.ERROR.err,
+      msg: req.app.locals.ERROR.msg,
+    }
+    res.status(503).json(resData)
+  }
+
   separation(req.user.pages)
     .then((ass) => {
       let data = {}
@@ -54,6 +63,15 @@ router.get('/assignment', auth, async (req, res) => {
 })
 
 router.get('/pages/load', auth, async (req, res) => {
+  if (req.app.locals.ERROR) {
+    let resData = {
+      success: false,
+      err: req.app.locals.ERROR.err,
+      msg: req.app.locals.ERROR.msg,
+    }
+    res.status(503).json(resData)
+  }
+
   // let newUser = new User();
   // newUser.slfDec()
   let pages = await main(req.user.enroll, req.user.slfDec(req.user.tokenKey))

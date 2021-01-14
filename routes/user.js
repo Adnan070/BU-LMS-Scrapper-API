@@ -11,6 +11,15 @@ const { main } = require('../crawler/scrap')
 //=================================
 
 router.get('/auth', auth, (req, res) => {
+  if (req.app.locals.ERROR) {
+    let resData = {
+      success: false,
+      err: req.app.locals.ERROR.err,
+      msg: req.app.locals.ERROR.msg,
+    }
+    res.status(503).json(resData)
+  }
+
   res.status(200).json({
     _id: req.user._id,
     // name: req.user.name,
@@ -20,6 +29,15 @@ router.get('/auth', auth, (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
+  if (req.app.locals.ERROR) {
+    let resData = {
+      success: false,
+      err: req.app.locals.ERROR.err,
+      msg: req.app.locals.ERROR.msg,
+    }
+    res.status(503).json(resData)
+  }
+
   let body = {
     enroll: req.body.enroll,
     password: req.body.password,
@@ -64,22 +82,36 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', (req, res) => {
+  if (req.app.locals.ERROR) {
+    let resData = {
+      success: false,
+      err: req.app.locals.ERROR.err,
+      msg: req.app.locals.ERROR.msg,
+    }
+    res.status(503).json(resData)
+  }
   User.findOne({ enroll: req.body.enroll }, (err, user) => {
     if (!user)
-      return res.json({
+      return res.status(401).json({
         loginSuccess: false,
-        message: 'Auth failed, enroll not found',
+        message: 'Auth failed, Enroll not found. Please Register First!',
       })
 
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (!isMatch)
-        return res.json({
+        return res.status(401).json({
           loginSuccess: false,
-          message: 'Wrong password',
+          message: 'Wrong Password',
         })
       console.log('Password Correct')
       user.generateToken((err, user) => {
-        if (err) return res.status(400).send(err)
+        if (err)
+          return res.status(500).json({
+            loginSuccess: false,
+            err,
+            msg:
+              'Servers are not working as expected. The request is probably valid but needs to be requested again later.',
+          })
         console.log('Token Genrated')
         req.session.w_auth = user.token
         console.log(req.session.w_auth)
@@ -87,6 +119,7 @@ router.post('/login', (req, res) => {
         res.status(200).json({
           loginSuccess: true,
           userId: user._id,
+          enroll: user.enroll,
         })
       })
     })
@@ -94,6 +127,15 @@ router.post('/login', (req, res) => {
 })
 
 router.get('/logout', auth, (req, res) => {
+  if (req.app.locals.ERROR) {
+    let resData = {
+      success: false,
+      err: req.app.locals.ERROR.err,
+      msg: req.app.locals.ERROR.msg,
+    }
+    res.status(503).json(resData)
+  }
+
   User.findOneAndUpdate(
     { _id: req.user._id },
     { token: '', tokenExp: '' },

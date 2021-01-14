@@ -20,7 +20,13 @@ const uri = process.env.MONGO_URI
     .then(() => {
       console.log('MongoDB Connected…')
     })
-    .catch((err) => console.log(err))
+    .catch(
+      (err) =>
+        (app.locals.ERROR = {
+          err,
+          msg: 'Service Unavailable, please try again later!',
+        }),
+    )
 })()
 
 // var corsOptions = {
@@ -40,9 +46,9 @@ app.use(
     saveUninitialized: false,
 
     cookie: {
-      path: '/',
-      httpOnly: true,
-      secure: true,
+      // path: '/',
+      // httpOnly: true,
+      // secure: false,
       expires: false,
       // maxAge: 1000 * 60 * 60, // (1000 -> msec * 60 -> sec * 60 -> min * 24 -> hrs * 1 -> days)
     },
@@ -54,4 +60,4 @@ app.use('/lms/crawler', require('./routes/crawl'))
 
 // schedule.scheduleJob('*/2 * * * *', () => separation());
 // app.set('port', process.env.NODE_PORT)
-app.listen(port, () => console.log('App is running!'))
+app.listen(port, () => console.log('App is running! ', port))
