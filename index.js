@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const schedule = require('node-schedule')
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5005
 const uri = process.env.MONGO_URI
 
 // Connecting to Database
