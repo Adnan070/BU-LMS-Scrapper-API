@@ -20,15 +20,13 @@ const uri = process.env.MONGO_URI
     .then(() => {
       console.log('MongoDB Connected…')
     })
-    .catch(
-      (err) => {
-        console.log("ERROR OF CONNECT : ", err)
-        (process.env.CONNECTION_ERROR = {
-          err,
-          msg: 'Service Unavailable, please try again later!',
-        }),
+    .catch((err) => {
+      console.log('ERROR OF CONNECT : ', err)
+      process.env.CONNECTION_ERROR = {
+        err,
+        msg: 'Service Unavailable, please try again later!',
       }
-    )
+    })
 })()
 
 // var corsOptions = {
