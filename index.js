@@ -23,7 +23,7 @@ const uri = process.env.MONGO_URI
     .catch(
       (err) => {
         console.log("ERROR OF CONNECT : ", err)
-        (app.locals.ERROR = {
+        (process.env.CONNECTION_ERROR = {
           err,
           msg: 'Service Unavailable, please try again later!',
         }),

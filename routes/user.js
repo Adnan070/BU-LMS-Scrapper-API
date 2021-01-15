@@ -11,11 +11,11 @@ const { main } = require('../crawler/scrap')
 //=================================
 
 router.get('/auth', auth, (req, res) => {
-  if (req.app.locals.ERROR) {
+  if (process.env.CONNECTION_ERROR !== -1) {
     let resData = {
       success: false,
-      err: req.app.locals.ERROR.err,
-      msg: req.app.locals.ERROR.msg,
+      err: process.env.CONNECTION_ERROR.err,
+      msg: process.env.CONNECTION_ERROR.msg,
     }
     res.status(503).json(resData)
   }
@@ -29,11 +29,11 @@ router.get('/auth', auth, (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-  if (req.app.locals.ERROR) {
+  if (process.env.CONNECTION_ERROR !== -1) {
     let resData = {
       success: false,
-      err: req.app.locals.ERROR.err,
-      msg: req.app.locals.ERROR.msg,
+      err: process.env.CONNECTION_ERROR.err,
+      msg: process.env.CONNECTION_ERROR.msg,
     }
     res.status(503).json(resData)
   }
@@ -82,14 +82,15 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-  if (req.app.locals.ERROR) {
+  if (process.env.CONNECTION_ERROR !== -1) {
     let resData = {
       success: false,
-      err: req.app.locals.ERROR.err,
-      msg: req.app.locals.ERROR.msg,
+      err: process.env.CONNECTION_ERROR.err,
+      msg: process.env.CONNECTION_ERROR.msg,
     }
     res.status(503).json(resData)
   }
+
   User.findOne({ enroll: req.body.enroll }, (err, user) => {
     if (!user)
       return res.status(401).json({
@@ -127,11 +128,11 @@ router.post('/login', (req, res) => {
 })
 
 router.get('/logout', auth, (req, res) => {
-  if (req.app.locals.ERROR) {
+  if (process.env.CONNECTION_ERROR !== -1) {
     let resData = {
       success: false,
-      err: req.app.locals.ERROR.err,
-      msg: req.app.locals.ERROR.msg,
+      err: process.env.CONNECTION_ERROR.err,
+      msg: process.env.CONNECTION_ERROR.msg,
     }
     res.status(503).json(resData)
   }
