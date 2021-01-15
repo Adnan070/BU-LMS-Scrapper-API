@@ -21,11 +21,13 @@ const uri = process.env.MONGO_URI
       console.log('MongoDB Connected…')
     })
     .catch(
-      (err) =>
+      (err) => {
+        console.log("ERROR OF CONNECT : ", err)
         (app.locals.ERROR = {
           err,
           msg: 'Service Unavailable, please try again later!',
         }),
+      }
     )
 })()
 
