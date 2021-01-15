@@ -6,7 +6,7 @@ const { auth } = require('../util/auth')
 const router = require('express').Router()
 
 router.get('/assignment', auth, async (req, res) => {
-  if (process.env.CONNECTION_ERROR !== -1) {
+  if (process.env.CONNECTION_ERROR != -1) {
     let resData = {
       success: false,
       err: process.env.CONNECTION_ERROR.err,
@@ -63,7 +63,7 @@ router.get('/assignment', auth, async (req, res) => {
 })
 
 router.get('/pages/load', auth, async (req, res) => {
-  if (process.env.CONNECTION_ERROR !== -1) {
+  if (process.env.CONNECTION_ERROR != -1) {
     let resData = {
       success: false,
       err: process.env.CONNECTION_ERROR.err,

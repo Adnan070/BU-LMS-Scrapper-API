@@ -11,7 +11,7 @@ const { main } = require('../crawler/scrap')
 //=================================
 
 router.get('/auth', auth, (req, res) => {
-  if (process.env.CONNECTION_ERROR !== -1) {
+  if (process.env.CONNECTION_ERROR != -1) {
     let resData = {
       success: false,
       err: process.env.CONNECTION_ERROR.err,
@@ -29,7 +29,7 @@ router.get('/auth', auth, (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-  if (process.env.CONNECTION_ERROR !== -1) {
+  if (process.env.CONNECTION_ERROR != -1) {
     let resData = {
       success: false,
       err: process.env.CONNECTION_ERROR.err,
@@ -82,7 +82,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-  if (process.env.CONNECTION_ERROR !== -1) {
+  if (process.env.CONNECTION_ERROR != -1) {
     let resData = {
       success: false,
       err: process.env.CONNECTION_ERROR.err,
@@ -128,7 +128,7 @@ router.post('/login', (req, res) => {
 })
 
 router.get('/logout', auth, (req, res) => {
-  if (process.env.CONNECTION_ERROR !== -1) {
+  if (process.env.CONNECTION_ERROR != -1) {
     let resData = {
       success: false,
       err: process.env.CONNECTION_ERROR.err,
