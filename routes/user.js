@@ -11,14 +11,14 @@ const { main } = require('../crawler/scrap')
 //=================================
 
 router.get('/auth', auth, (req, res) => {
-  if (process.env.CONNECTION_ERROR != -1) {
-    let resData = {
-      success: false,
-      err: process.env.CONNECTION_ERROR.err,
-      msg: process.env.CONNECTION_ERROR.msg,
-    }
-    res.status(503).json(resData)
-  }
+  //   if (process.env.CONNECTION_ERROR != -1) {
+  //     let resData = {
+  //       success: false,
+  //       err: process.env.CONNECTION_ERROR.err,
+  //       msg: process.env.CONNECTION_ERROR.msg,
+  //     }
+  //     res.status(503).json(resData)
+  //   }
 
   res.status(200).json({
     _id: req.user._id,
@@ -29,35 +29,35 @@ router.get('/auth', auth, (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-  if (process.env.CONNECTION_ERROR != -1) {
-    let resData = {
-      success: false,
-      err: process.env.CONNECTION_ERROR.err,
-      msg: process.env.CONNECTION_ERROR.msg,
-    }
-    res.status(503).json(resData)
-  }
+  //   if (process.env.CONNECTION_ERROR != -1) {
+  //     let resData = {
+  //       success: false,
+  //       err: process.env.CONNECTION_ERROR.err,
+  //       msg: process.env.CONNECTION_ERROR.msg,
+  //     }
+  //     res.status(503).json(resData)
+  //   }
 
   let body = {
     enroll: req.body.enroll,
     password: req.body.password,
   }
+  const user = new User(body)
+  User.findOne({ enroll: req.body.enroll }, (err, _user) => {
+    if (_user) {
+      return res
+        .status(200)
+        .json({ success: false, msg: 'User Already Exist! ' })
+    }
+    main(body.enroll, body.password)
+      .then((pg) => {
+        if (!pg)
+          return res.status(403).json({
+            success: false,
+            msg: 'Invalid credentials provided!',
+          })
+        body['pages'] = pg
 
-  main(body.enroll, body.password)
-    .then((pg) => {
-      if (!pg)
-        return res.status(403).json({
-          success: false,
-          msg: 'Invalid credentials provided!',
-        })
-      body['pages'] = pg
-      const user = new User(body)
-      User.findOne({ enroll: req.body.enroll }, (err, _user) => {
-        if (_user) {
-          return res
-            .status(200)
-            .json({ success: false, msg: 'User Already Exist! ' })
-        }
         user.save((err, doc) => {
           if (err) {
             console.log(err)
@@ -71,25 +71,25 @@ router.post('/register', async (req, res) => {
           })
         })
       })
-    })
-    .catch((err) => {
-      return res.status(500).json({
-        success: false,
-        err,
-        msg: 'Some Server Error Please try Again Later!',
+      .catch((err) => {
+        return res.status(500).json({
+          success: false,
+          err,
+          msg: 'Some Server Error Please try Again Later!',
+        })
       })
-    })
+  })
 })
 
 router.post('/login', (req, res) => {
-  if (process.env.CONNECTION_ERROR != -1) {
-    let resData = {
-      success: false,
-      err: process.env.CONNECTION_ERROR.err,
-      msg: process.env.CONNECTION_ERROR.msg,
-    }
-    res.status(503).json(resData)
-  }
+  //   if (process.env.CONNECTION_ERROR != -1) {
+  //     let resData = {
+  //       success: false,
+  //       err: process.env.CONNECTION_ERROR.err,
+  //       msg: process.env.CONNECTION_ERROR.msg,
+  //     }
+  //     res.status(503).json(resData)
+  //   }
 
   User.findOne({ enroll: req.body.enroll }, (err, user) => {
     if (!user)
@@ -128,14 +128,14 @@ router.post('/login', (req, res) => {
 })
 
 router.get('/logout', auth, (req, res) => {
-  if (process.env.CONNECTION_ERROR != -1) {
-    let resData = {
-      success: false,
-      err: process.env.CONNECTION_ERROR.err,
-      msg: process.env.CONNECTION_ERROR.msg,
-    }
-    res.status(503).json(resData)
-  }
+  //   if (process.env.CONNECTION_ERROR != -1) {
+  //     let resData = {
+  //       success: false,
+  //       err: process.env.CONNECTION_ERROR.err,
+  //       msg: process.env.CONNECTION_ERROR.msg,
+  //     }
+  //     res.status(503).json(resData)
+  //   }
 
   User.findOneAndUpdate(
     { _id: req.user._id },
