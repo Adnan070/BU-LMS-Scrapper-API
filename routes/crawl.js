@@ -6,14 +6,14 @@ const { auth } = require('../util/auth')
 const router = require('express').Router()
 
 router.get('/assignment', auth, async (req, res) => {
-//   if (process.env.CONNECTION_ERROR != -1) {
-//     let resData = {
-//       success: false,
-//       err: process.env.CONNECTION_ERROR.err,
-//       msg: process.env.CONNECTION_ERROR.msg,
-//     }
-//     res.status(503).json(resData)
-//   }
+  //   if (process.env.CONNECTION_ERROR != -1) {
+  //     let resData = {
+  //       success: false,
+  //       err: process.env.CONNECTION_ERROR.err,
+  //       msg: process.env.CONNECTION_ERROR.msg,
+  //     }
+  //     res.status(503).json(resData)
+  //   }
 
   separation(req.user.pages)
     .then((ass) => {
@@ -63,20 +63,20 @@ router.get('/assignment', auth, async (req, res) => {
 })
 
 router.get('/pages/load', auth, async (req, res) => {
-//   if (process.env.CONNECTION_ERROR != -1) {
-//     let resData = {
-//       success: false,
-//       err: process.env.CONNECTION_ERROR.err,
-//       msg: process.env.CONNECTION_ERROR.msg,
-//     }
-//     res.status(503).json(resData)
-//   }
+  //   if (process.env.CONNECTION_ERROR != -1) {
+  //     let resData = {
+  //       success: false,
+  //       err: process.env.CONNECTION_ERROR.err,
+  //       msg: process.env.CONNECTION_ERROR.msg,
+  //     }
+  //     res.status(503).json(resData)
+  //   }
 
   // let newUser = new User();
   // newUser.slfDec()
   let pages = await main(req.user.enroll, req.user.slfDec(req.user.tokenKey))
 
-  if (pages.values.length === 8 && pages.coursePages.length === 8) {
+  if (pages.values.length > 0 && pages.coursePages.length > 0) {
     User.findByIdAndUpdate(req.user._id, { pages }, (err, doc) => {
       if (err) res.status(500).json({ success: false, err })
 
