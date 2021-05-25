@@ -26,7 +26,7 @@ router.get('/assignment', auth, async (req, res) => {
         for (let i = 0; i < ass.keys.length; i++) {
           console.log('key: ', ass.keys[i], ' value: ', ass.rowData[i])
           // data[ass.keys[i]] = ass.rowData[i]
-          data.push({ title: ass.keys[i], ...ass.rowData })
+          data.push({ title: ass.keys[i], ...ass.rowData[i] })
         }
       }
       console.log(data)
