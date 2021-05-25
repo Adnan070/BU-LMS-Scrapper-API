@@ -52,9 +52,10 @@ exports.main = async (enroll, pass) => {
   let $ = cheerio.load(await login(page, enroll, pass))
   if ($('#ProfileInfo_lblUsername').text() == enroll) {
     $ = cheerio.load(await goToLMS(page))
+    await setTimeout(() => {}, 1000)
+
     if ($('#courseId').length) {
       $('select#courseId option').each(function (index) {
-        console.log()
         values.push({
           key: $(this).val(),
           value: $(this).text().trim().split('\n'),

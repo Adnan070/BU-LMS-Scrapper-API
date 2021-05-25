@@ -132,10 +132,10 @@ exports.separation = async ({ coursePages: pages, values }) => {
   // console.log('Test: ',pages.length > 0 && values.length ===  pages.length)
   // // main(enroll, pass).then(({coursePages:pages, values}) => {
   if (pages.length > 0 && values.length === pages.length) {
-    console.log('before')
+    // console.log('before')
 
     for (let i = 0; i < pages.length; i++) {
-      console.log(i)
+      // console.log(i)
       let ass = getOneByOneAssignmentDeadlines(pages[i])
       // console.log('after',ass)
       let row = getRowData(ass)
@@ -143,7 +143,7 @@ exports.separation = async ({ coursePages: pages, values }) => {
       rowData.push(row)
       keys.push(values[i].value[0])
     }
-    console.log(rowData)
+    // console.log(rowData)
   }
   // })
   // .catch((err) => {
