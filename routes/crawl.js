@@ -17,7 +17,7 @@ router.get('/assignment', auth, async (req, res) => {
 
   separation(req.user.pages)
     .then((ass) => {
-      let data = {}
+      let data = []
       console.log(
         'Test: ',
         ass.keys.length === ass.rowData.length && ass.keys.length > 0,
@@ -25,7 +25,8 @@ router.get('/assignment', auth, async (req, res) => {
       if (ass.keys.length > 0) {
         for (let i = 0; i < ass.keys.length; i++) {
           console.log('key: ', ass.keys[i], ' value: ', ass.rowData[i])
-          data[ass.keys[i]] = ass.rowData[i]
+          // data[ass.keys[i]] = ass.rowData[i]
+          data.push({ title: ass.keys[i], ...ass.rowData })
         }
       }
       console.log(data)
